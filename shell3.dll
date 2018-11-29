@@ -1,0 +1,28 @@
+reset;
+
+model case04.mod;
+option solver ipopt;
+solve;
+
+shell ("del " & ("tf.txt"));
+shell ("del " & ("NE.txt"));
+shell ("del " & ("x.txt"));
+shell ("del " & ("y.txt"));
+shell ("del " & ("t.txt"));
+
+shell ("del " & ("x.INIVAL"));
+for {ooxx in {1..NC}} {
+	for {i in I} {
+		for {j in K} {		
+			printf "let x[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,x[i,j,ooxx]>>("x.INIVAL");
+			printf "let y[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,y[i,j,ooxx]>>("x.INIVAL");
+			printf "let theta[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,theta[i,j,ooxx]>>("x.INIVAL");
+			printf "let v[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,v[i,j,ooxx]>>("x.INIVAL");
+			printf "let phy[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,phy[i,j,ooxx]>>("x.INIVAL");
+			printf "let a[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,a[i,j,ooxx]>>("x.INIVAL");
+			printf "let w[%d,%d,%d]:=  %5.8f; \n",  i,j,ooxx,w[i,j,ooxx]>>("x.INIVAL");
+		}	
+	}
+}
+printf "let tf:=  %5.8f; \n",  tf>>("x.INIVAL");
+close ("x.INIVAL");

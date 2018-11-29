@@ -1,0 +1,52 @@
+function XX = PXPY_generater(nA1,nA2,nA3)
+global gap_max
+
+NOC = nA1 + nA2 + nA3;
+gap = gap_max;
+
+x1(1) = rand*gap;
+y1(1) = -3.75;
+for ii = 2 : nA1
+    x1(ii) = x1(ii-1) - 4.689 - rand*gap;
+    y1(ii) = -3.75;
+end
+
+x2(1) = rand*gap;
+y2(1) = 0;
+for ii = 2 : nA2
+    x2(ii) = x2(ii-1) - 4.689 - rand*gap;
+    y2(ii) = 0;
+end
+
+x3(1) = rand*gap;
+y3(1) = 3.75;
+for ii = 2 : nA3
+    x3(ii) = x3(ii-1) - 4.689 - rand*gap;
+    y3(ii) = 3.75;
+end
+
+
+xx = [x1,x2,x3];
+yy = [y1,y2,y3];
+PXPY = [xx;yy]';
+
+
+temp = zeros(2*NOC,3);
+ind = 0;
+for ii = 1:NOC
+    for jj = 1:2
+        ind = ind + 1;
+        temp(ind,1) = ii;
+        temp(ind,2) = jj;
+        temp(ind,3) = PXPY(ii,jj);
+    end
+end
+
+XX = temp;
+
+delete('PXPY');
+fid = fopen('PXPY', 'w');
+for ii = 1 : (size(XX,1))
+    fprintf(fid,'%g  %g  %f    \r\n', XX(ii,1),XX(ii,2),XX(ii,3));
+end
+fclose(fid);

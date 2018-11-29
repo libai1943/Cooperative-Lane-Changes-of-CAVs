@@ -1,0 +1,25 @@
+reset;
+
+model case02.mod;
+include x.INIVAL;
+option solver ipopt;
+solve;
+
+for {ooxx in {1..NC}} {
+	for {i in I} {
+		for {j in K} {
+			printf "%5.8f; ",  x[i,j,ooxx]>>("x.txt");
+			printf "%5.8f; ",  y[i,j,ooxx]>>("y.txt");
+			printf "%5.8f; ",  theta[i,j,ooxx]>>("t.txt");
+		}
+	}
+}
+
+printf "%5.8f; ",  NE>>("NE.txt");
+printf "%5.8f; ",  tf>>("tf.txt");
+
+close ("t.txt");
+close ("tf.txt");
+close ("NE.txt");
+close ("x.txt");
+close ("y.txt");
